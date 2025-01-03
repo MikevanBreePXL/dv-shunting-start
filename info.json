@@ -1,0 +1,8 @@
+{
+	"Id": "ShuntingStart",
+	"Version": "1.0.0",
+	"DisplayName": "Shunting Start",
+	"Author": "NotAnOption",
+	"EntryMethod": "ShuntingStart.Main.Load",
+	"ManagerVersion": "0.27.3"
+}
