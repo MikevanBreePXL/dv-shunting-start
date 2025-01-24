@@ -17,13 +17,12 @@ namespace ShuntingStart
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             /*
-            // Replace IL-code
-            //   IL_0112: ldc.i4    512
-            // with
-            //   IL_0112: ldc.i4    1024
-
-				JobLicenseType_v1 are enum values
-			*/
+            //          JobLicenseType_v1 are enum values
+            //          Replace IL-code
+            // IL_0211: ldc.i4    512
+            //          with
+            // IL_0112: ldc.i4    1024
+            */
 
             var codes = new List<CodeInstruction>(instructions);
             int replacements = 0;
@@ -53,19 +52,16 @@ namespace ShuntingStart
     [HarmonyPatch(typeof(StartGameData_NewCareer))]
     public static class StartGameDataNewCareerPatch
     {
-        // Change original call from FreightHaul to Shunting
-        //[HarmonyPatch("PrepareNewSaveData")] // Build 99
-        [HarmonyPatch("Initialize")] // Build 98
+        [HarmonyPatch("Initialize")]
         [HarmonyTranspiler]
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             /*
-            // Replace IL-code
-            //    IL_0211: ldc.i4    512
-            // with
-            //   IL_0112: ldc.i4    1024
-
-                JobLicenseType_v1 are enum values
+            //          JobLicenseType_v1 are enum values
+            //          Replace IL-code
+            // IL_0211: ldc.i4    512
+            //          with
+            // IL_0112: ldc.i4    1024
             */
 
             var codes = new List<CodeInstruction>(instructions);
