@@ -1,50 +1,64 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Emit;
+using DV;
+using System.Text;
 using DV.Booklets;
 using DV.ThingTypes;
 using DV.ThingTypes.TransitionHelpers;
 using DV.Utils;
 using HarmonyLib;
 using UnityEngine;
+using static DV.UI.ATutorialsMenuProvider;
+using System;
 
 namespace ShuntingStart
 {
     [HarmonyPatch(typeof(LicenseManager), "LoadData")]
     public static class LicenseManagerLoadDataPatch
     {
-        // Change original call from FreightHaul to Shunting
-        [HarmonyTranspiler]
-        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        private static Boolean isFreightHaulAlreadyAcquired = true;
+
+        [HarmonyPrefix]
+        static bool Prefix()
         {
-            /*
-            //          JobLicenseType_v1 are enum values
-            //          Replace IL-code
-            // IL_0211: ldc.i4    512
-            //          with
-            // IL_0112: ldc.i4    1024
-            */
 
-            var codes = new List<CodeInstruction>(instructions);
-            int replacements = 0;
-
-            for (var i = 0; i < codes.Count; i++)
+            JobLicenseType_v2 jobLicenseType_v = JobLicenses.FreightHaul.ToV2();
+            if (LicenseManager.Instance.IsJobLicenseAcquired(jobLicenseType_v) == false)
             {
-                if (codes[i].opcode == OpCodes.Ldc_I4 && (int)codes[i].operand == 512)
-                {
-                    codes[i].operand = 1024;
-                    replacements++;
-                    Debug.Log($"ShuntingStart: Replaced FreightHaul(512) with Shunting(1024) at index {i}");
-                }
+                LicenseManager.Instance.AcquireJobLicense(jobLicenseType_v);
+                isFreightHaulAlreadyAcquired = false;
+                Debug.Log("ShuntingStart: FreightHaul license not purchased, temporarily adding for bypassing vanilla-check");
             }
 
-            Debug.Log($"ShuntingStart: Made {replacements} replacements in LicenseManagerLoadDataPatch");
-            return codes;
+            return true; // Run original method as intended
         }
 
         [HarmonyPostfix]
-        static void Postfix(LicenseManager __instance)
+        static void Postfix()
         {
-            JobLicenses.FreightHaul.ToV2().price = 10000f; // 10k
+            if (isFreightHaulAlreadyAcquired)
+            {
+                Debug.Log("ShuntingStart: Skipping Shunting license purchase");
+                return;
+            }
+
+            JobLicenseType_v2 jobLicenseType_v = JobLicenses.Shunting.ToV2();
+            if(!LicenseManager.Instance.IsJobLicenseAcquired(jobLicenseType_v))
+            {
+                LicenseManager.Instance.AcquireJobLicense(jobLicenseType_v);
+                Debug.Log("ShuntingStart: Shunting license acquired");
+            }
+
+            jobLicenseType_v = JobLicenses.FreightHaul.ToV2();
+            if (LicenseManager.Instance.IsJobLicenseAcquired(jobLicenseType_v))
+            {
+                LicenseManager.Instance.RemoveJobLicense(new List<JobLicenseType_v2> { jobLicenseType_v });
+                Debug.Log("ShuntingStart: FreightHaul license cleared after vanilla-check");
+            }
+            else
+            {
+                Debug.LogError("What happened?! FreightHaul license not cleared after vanilla-check");
+            }
         }
     }
 
