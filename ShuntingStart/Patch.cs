@@ -1,45 +1,39 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
-using DV.Booklets;
-using DV.Localization.Debug;
 using HarmonyLib;
-using DV.ThingTypes;
-using DV.ThingTypes.TransitionHelpers;
-using UnityModManagerNet;
 
 namespace ShuntingStart
 {
-	[HarmonyPatch(typeof(LicenseManager))]
-	[HarmonyPatch("LoadData")]
-	public static class LicenseManagerLoadDataPatch
-	{
-		// Change super method before running
-		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-		{
-			// Todo: Try to replace base FreightHaul BookletCreator.CreateLicense()
-			return instructions;
-		}
+    [HarmonyPatch(typeof(LicenseManager))]
+    [HarmonyPatch("LoadData")]
+    public static class LicenseManagerLoadDataPatch
+    {
+        // Change original call from FreightHaul to Shunting
+        [HarmonyTranspiler]
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            /*
+            // Replace IL-code
+            //   IL_0112: ldc.i4    512
+            // with
+            //   IL_0112: ldc.i4    1024
 
-		// Run patch after super method
-		static void Postfix(LicenseManager __instance)
-		{
-			// Price of FreightHaul is 0 by default
-			JobLicenses.FreightHaul.ToV2().price = 1500f;
+				JobLicenseType_v1 are enum values
+			*/
 
-			// Check if it is a fresh savegame (until first JobLicense purchased)
-			var acquiredJobLicenses = __instance.GetAcquiredJobLicenses();
-			if (acquiredJobLicenses.Count == 1
-			&& acquiredJobLicenses.Contains(JobLicenses.FreightHaul.ToV2()))
-			{
-				// Change Game Logic tracking
-				__instance.RemoveJobLicense(new List<JobLicenseType_v2> { JobLicenses.FreightHaul.ToV2() });
-				__instance.AcquireJobLicense(JobLicenses.Shunting.ToV2());
+            var codes = new List<CodeInstruction>(instructions);
 
-				// Create Booklet page (availalbe in Lost & Found shed)
-				BookletCreator.CreateLicense(JobLicenses.Shunting.ToV2(), UnityEngine.Vector3.zero,
-					UnityEngine.Quaternion.identity, WorldMover.OriginShiftParent);
-			}
-		}
-	}
+            for (var i = 0; i < codes.Count; i++)
+            {
+                if (codes[i].opcode == OpCodes.Ldc_I4 && (int)codes[i].operand == 512)
+                {
+                    codes[i].operand = 1024;
+                    break;
+                }
+            }
+
+            return instructions;
+        }
+
+    }
 }
