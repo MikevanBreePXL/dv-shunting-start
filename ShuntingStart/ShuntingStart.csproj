@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>ShuntingStart</AssemblyName>
     <TargetFramework>net48</TargetFramework>
@@ -10,29 +10,118 @@
   <!-- Derail Valley -->
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>G:\Games\DerailValley\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\Assembly-CSharp.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.BrakeSystem">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.BrakeSystem.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.CharacterController">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.CharacterController.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.Common">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Common.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.ControllerAnchors">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.ControllerAnchors.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.Highlighting">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Highlighting.dll</HintPath>
+		<Private>False</Private>
     </Reference>
-    <Reference Include="DV.ThingTypes">
-      <HintPath>G:\Games\DerailValley\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
+    <Reference Include="DV.Interaction">
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Interaction.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="DV.Utils">
-      <HintPath>G:\Games\DerailValley\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
+    <Reference Include="DV.Inventory">
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Inventory.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.Localization">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Localization.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.NAudio">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.NAudio.dll</HintPath>
+		<Private>False</Private>
+    </Reference>
+    <Reference Include="DV.PointSet">
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.PointSet.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.RadioPlayer">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.RadioPlayer.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.Scenarios.CRUD">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Scenarios.CRUD.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.ShaderStripper">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.ShaderStripper.dll</HintPath>
+		<Private>False</Private>
+    </Reference>
+    <Reference Include="DV.Simulation">
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Simulation.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.Telemetry">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Telemetry.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.TerrainSystem">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.TerrainSystem.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.TerrainTools">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.TerrainTools.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.ThingTypes">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.ThingTypes.dll</HintPath>
+		<Private>False</Private>
+    </Reference>
+    <Reference Include="DV.UI">
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.UI.dll</HintPath>
+		<Private>False</Private>
+    </Reference>
+    <Reference Include="DV.UIFramework">
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.UIFramework.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.UserManagement">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.UserManagement.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.Utils">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.Utils.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="DV.WeatherSystem">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\DV.WeatherSystem.dll</HintPath>
+		<Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <!-- Unity -->
   <ItemGroup>
     <Reference Include="UnityEngine">
-      <HintPath>G:\Games\DerailValley\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>G:\Games\DerailValley\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	<Reference Include="UnityEngine.CoreModule">
+		<HintPath>$(DerailValleyPath)\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+		<Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <!-- Mod Loader -->
   <ItemGroup>
-    <PackageReference Include="UnityModManager" Version="0.27.2" />
+    <PackageReference Include="UnityModManager" Version="0.27.2" />	
   </ItemGroup>
 
   <!-- Null Checking -->
